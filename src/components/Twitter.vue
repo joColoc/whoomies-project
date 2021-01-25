@@ -3,7 +3,7 @@
     <div v-for="(art, index ) in info"  v-bind:key="index" class="col-sm-6">
       <div class="card" v-on:click="home" >
         <div class="card-head" >
-          <img :src="art.urlToImage" class="card-img-top" :alt="art.title" :id="'card' + index">
+          <img :src="(art.urlToImage)" class="card-img-top" :alt="art.title" :id="'card' + index">
         </div>
         <div class="card-body" >
           <h5 class="card-title">{{ art.title }}</h5>
@@ -21,32 +21,35 @@ export default {
   data: function () {
     return {
       info:"",
-      source:  ["id", "name"],
-      author: "",
-      title: ""
+      imageSrc: [
+        {
+          src: '', 
+          id: ''
+          }
+        ]
     }
   },
   mounted () {
-   
     axios
       .get('http://newsapi.org/v2/top-headlines?' +
           'country=us&' +
           'apiKey=8f7f05239dc44c22be183428ebf1a9ff')
       .then(response => {
         this.info = response.data.articles,
-        this.fillData()
-        
-        })
-        
- 
+          this.fillImgData()
+    });
   },
    methods: {
-     fillData() {
-       this.info.forEach(function callback(element, key) {
-      //  console.log(element.urlToImage,key)
-          this.checkResource(element.urlToImage, key) 
-          
-       });
+     fillImgData() {
+       var ref = this
+         this.info.forEach(function callback(element, key) {
+        //  ref.imageSrc.src = element.urlToImage
+        //  ref.imageSrc.key = key
+         ref.checkResource(element.urlToImage,key)
+      });
+
+
+      
      },
      checkResource (url, index) {
       var req = new XMLHttpRequest()
@@ -58,7 +61,7 @@ export default {
       if (req.status === 403) {
         return index
       }
-   }
+   },
     }
 
 
