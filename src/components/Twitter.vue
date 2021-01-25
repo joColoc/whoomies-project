@@ -1,7 +1,7 @@
 <template>
-  <div class="row">
+  <div class="row"> 
     <div v-for="(art, index ) in info"  v-bind:key="index" class="col-sm-6">
-      <div class="card" v-on:click="home" >
+      <div class="card" v-on:click="linkTo(art.url)" >
         <div class="card-head" >
           <img :src="(art.urlToImage)" class="card-img-top" :alt="art.title" :id="'card' + index">
         </div>
@@ -37,6 +37,7 @@ export default {
       .then(response => {
         this.info = response.data.articles,
           this.fillImgData()
+         
     });
   },
    methods: {
@@ -62,6 +63,10 @@ export default {
         return index
       }
    },
+   linkTo(url) {
+    window.location.href=url
+    
+   }
     }
 
 
