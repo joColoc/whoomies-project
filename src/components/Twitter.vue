@@ -43,8 +43,8 @@ export default {
      fillImgData() {
        var ref = this
          this.info.forEach(function callback(element, key) {
-        //  ref.imageSrc.src = element.urlToImage
-        //  ref.imageSrc.key = key
+          ref.imageSrc.src = element.urlToImage
+          ref.imageSrc.key = key
          ref.checkResource(element.urlToImage,key)
       });
 
